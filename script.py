@@ -3,6 +3,7 @@ import psycopg2
 import schedule
 import datetime
 import os
+import time
 from sshtunnel import SSHTunnelForwarder
 from dotenv import load_dotenv
 
@@ -59,10 +60,8 @@ def task():
         print("Connection Failed")
 
 
-schedule.every(10).seconds.do(task)
-# schedule.every().minute.at(":00").do(task)
+schedule.every(5).minute.do(task)
 
-task()
-# while True:
-#     schedule.run_pending()
-#     time.sleep(1)
+while True:
+    schedule.run_pending()
+    time.sleep(1)

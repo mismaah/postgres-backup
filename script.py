@@ -60,7 +60,7 @@ def task():
         print("Connection failed")
 
 
-schedule.every(10).minutes.do(task)
+schedule.every().day.at("00:00").do(task)
 
 while True:
     schedule.run_pending()

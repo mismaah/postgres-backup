@@ -26,7 +26,7 @@ def task():
         ) as server:
 
             server.start()
-            print("server connected")
+            print("Tunnel connected")
 
             params = {
                 "database": env("CSQL_DATABASE"),
@@ -38,29 +38,29 @@ def task():
 
             conn = psycopg2.connect(**params)
             curs = conn.cursor()
-            print("database connected")
+            print("Database connected")
             curs.execute("SELECT datname FROM pg_database;")
             dbs = curs.fetchall()
             dbs = [i[0] for i in dbs]
             envDbs = env("DATABASES").split(",")
             dbs = [i for i in dbs if i in envDbs]
-            print(dbs)
 
             print("Creating new backup directory")
             subprocess.run(f"mkdir /app/data/${now}", shell=True)
             for db in dbs:
                 subprocess.run(
-                    f'pg_dump --dbname=postgresql://{env("CSQL_USER")}:{env("CSQL_PASSWORD")}@localhost:{server.local_bind_port}/{db} > /app/data/${now}/{db}.dump',
+                    f'pg_dump -Fc --dbname=postgresql://{env("CSQL_USER")}:{env("CSQL_PASSWORD")}@localhost:{server.local_bind_port}/{db} > /app/data/${now}/{db}.dump',
                     shell=True,
                 )
                 print(f"Dumped {db}")
+            print("Backup complete\n")
 
     except Exception as e:
         print(e)
-        print("Connection Failed")
+        print("Connection failed")
 
 
-schedule.every(5).minute.do(task)
+schedule.every(10).minutes.do(task)
 
 while True:
     schedule.run_pending()

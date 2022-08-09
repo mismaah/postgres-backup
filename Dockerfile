@@ -1,6 +1,14 @@
 # FROM postgres:13.7-alpine3.16
 FROM alpine
 
+# Set to maldives time
+RUN apk update
+RUN apk upgrade
+RUN apk add ca-certificates && update-ca-certificates
+RUN apk add --update tzdata
+ENV TZ=Etc/GMT-5
+RUN rm -rf /var/cache/apk/*
+
 # Install pg_dump
 RUN apk add --no-cache postgresql-client postgresql-libs postgresql-dev
 RUN apk add --no-cache --virtual .build-deps gcc musl-dev

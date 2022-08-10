@@ -18,7 +18,7 @@ def task():
     now = datetime.datetime.utcnow().strftime("%Y-%m-%dT%H-%M-%S")
     print(now)
     try:
-        if env("TUNNEL_HOST") != "":
+        if env("TUNNEL_HOST") != None:
             with SSHTunnelForwarder(
                 (env("TUNNEL_HOST"), 22),
                 ssh_username=env("TUNNEL_USERNAME"),

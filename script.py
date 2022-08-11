@@ -47,10 +47,10 @@ def task():
                 dbs = [i for i in dbs if i in envDbs]
 
                 print("Creating new backup directory")
-                subprocess.run(f"mkdir /app/data/${now}", shell=True)
+                subprocess.run(f"mkdir /app/data/{now}", shell=True)
                 for db in dbs:
                     subprocess.run(
-                        f'pg_dump -Fc --dbname=postgresql://{env("CSQL_USER")}:{env("CSQL_PASSWORD")}@localhost:{server.local_bind_port}/{db} > /app/data/${now}/{db}.dump',
+                        f'pg_dump -Fc --dbname=postgresql://{env("CSQL_USER")}:{env("CSQL_PASSWORD")}@localhost:{server.local_bind_port}/{db} > /app/data/{now}/{db}.dump',
                         shell=True,
                     )
                     print(f"Dumped {db}")

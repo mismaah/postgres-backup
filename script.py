@@ -7,14 +7,13 @@ import time
 from sshtunnel import SSHTunnelForwarder
 from dotenv import load_dotenv
 
-load_dotenv()
-
 
 def env(variable: str) -> str:
     return os.getenv(variable)
 
 
 def task():
+    load_dotenv()
     now = datetime.datetime.utcnow().strftime("%Y-%m-%dT%H-%M-%S")
     print(now)
     try:

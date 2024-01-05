@@ -1,11 +1,12 @@
-import subprocess
-import psycopg2
-import schedule
 import datetime
 import os
+import subprocess
 import time
-from sshtunnel import SSHTunnelForwarder
+
+import psycopg2
+import schedule
 from dotenv import load_dotenv
+from sshtunnel import SSHTunnelForwarder
 
 
 def env(variable: str) -> str:
@@ -22,6 +23,8 @@ def task():
                 (env("TUNNEL_HOST"), 22),
                 ssh_username=env("TUNNEL_USERNAME"),
                 ssh_password=env("TUNNEL_PASSWORD"),
+                ssh_private_key=env("TUNNEL_PKEY"),
+                ssh_private_key_password=env("TUNNEL_PKEY_PASSWORD"),
                 remote_bind_address=(env("CSQL_HOST"), 5432),
             ) as server:
 

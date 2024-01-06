@@ -16,14 +16,15 @@ RUN apk add --no-cache --virtual .build-deps gcc musl-dev
 # Install python
 ENV PYTHONUNBUFFERED=1
 RUN apk add --update --no-cache python3 && ln -sf python3 /usr/bin/python
-RUN python3 -m ensurepip
-RUN pip3 install --no-cache --upgrade pip setuptools
+RUN apk add cmd:pip3
+# RUN python3 -m ensurepip --break-system-packages
+RUN pip3 install --no-cache --upgrade pip setuptools --break-system-packages
 RUN apk add python3-dev
 
 WORKDIR /app
 COPY script.py ./
 COPY requirements.txt ./
-RUN pip3 install -r requirements.txt
+RUN pip3 install -r requirements.txt --break-system-packages
 RUN mkdir data
 
 ENTRYPOINT [ "/usr/bin/python3" ]

@@ -10,3 +10,5 @@ This script will build the image and run the container.
 The databases to be backed up are based on the `DATABASES` env variable.
 The container will mount to a host directory `./data` where the backups will be stored.
 They will be in gzip format so would need to be unzipped before restoring.
+
+Can use cron from the host machine for scheduling to run the script.

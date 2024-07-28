@@ -1,21 +1,12 @@
-# cloudsql-backup
+# postgres-backup
 
-Creates backups periodically from a GCP CloudSQL instance. Optionally creates an SSH tunnel to a host with a static IP. The tunnel might be needed so that the static IP can be whitelisted by CloudSQL.
-
-Runs at 00:00 everyday. Change the schedule code in `script.py` line 88 to change backup intervals.
+Docker container to automate backups from a PostgreSQL instance.
 
 ## Quickstart
 
-Rename `.env.example` to `.env` and fill all variables. If SSH tunnel is not required, no need to fill in the `TUNNEL_*` variables.
-
-Build docker image.
-```powershell
-docker build -t cloudsql-backup .
-```
-
-Run docker container.
-```powershell
-docker run --env-file .env -v $PWD/data:/app/data cloudsql-backup
-```
-
-The backups will be stored in the mounted volume.
+Rename `.env.example` to `.env` and fill all variables.
+Run the `docker.sh` or `docker.ps1` script.
+This script will build the image and run the container.
+The databases to be backed up are based on the `DATABASES` env variable.
+The container will mount to a host directory `./data` where the backups will be stored.
+They will be in gzip format so would need to be unzipped before restoring.

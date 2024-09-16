@@ -1,6 +1,6 @@
 #!/bin/bash
 
-docker stop cloudsql-backup
-docker rm cloudsql-backup
-docker build . -t cloudsql-backup
-docker run --env-file .env --name cloudsql-backup -v ${PWD}/data:/app/data cloudsql-backup
+docker stop postgres-backup
+docker rm postgres-backup
+docker build . -t postgres-backup
+docker run --env-file .env --name postgres-backup -v ${PWD}/data:/app/data postgres-backup
